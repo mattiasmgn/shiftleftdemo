@@ -46,7 +46,7 @@ public class PriceInfoSoapEndpoint {
             dto.setFruit(fruit);
             dto.setPrice(priceNOK);
             dto.setUnits(numberOfFruit);
-            dto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+            //dto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
             response.setPriceInformation(dto);
             return response;
         }
