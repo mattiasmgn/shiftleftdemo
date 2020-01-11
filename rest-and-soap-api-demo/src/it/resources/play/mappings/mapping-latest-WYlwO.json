@@ -1,0 +1,28 @@
+{
+  "id" : "443a3f2e-f2be-3373-8811-6318e83a0a04",
+  "request" : {
+    "url" : "/latest?symbols=SEK&symbols=NOK&base=SEK",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "bodyFileName" : "body-latest-WYlwO.json",
+    "headers" : {
+      "Date" : "Sat, 14 Dec 2019 21:15:10 GMT",
+      "Content-Type" : "application/json",
+      "Transfer-Encoding" : "chunked",
+      "Connection" : "keep-alive",
+      "Set-Cookie" : "__cfduid=de078639221e7ea69822641c44d973b101576358110; expires=Mon, 13-Jan-20 21:15:10 GMT; path=/; domain=.exchangeratesapi.io; HttpOnly",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Credentials" : "true",
+      "Access-Control-Allow-Methods" : "GET",
+      "Cache-Control" : "max-age=1800",
+      "CF-Cache-Status" : "EXPIRED",
+      "Expect-CT" : "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+      "Vary" : "Accept-Encoding",
+      "Server" : "cloudflare",
+      "CF-RAY" : "5453311049c3d891-CPH"
+    }
+  },
+  "uuid" : "443a3f2e-f2be-3373-8811-6318e83a0a04"
+}

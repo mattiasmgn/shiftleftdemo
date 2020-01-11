@@ -1,0 +1,17 @@
+{
+  "name": "rest-and-soap-api-demo-cypress-tests",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Cypress tests w/ mocked services",
+  "scripts": {
+    "test": "cypress run",
+    "cypress": "cypress open",
+    "serve": "node server.js"
+  },
+  "author": "Telia Company AB",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "cypress": "^3.8.1",
+    "node-static": "^0.7.11"
+  }
+}

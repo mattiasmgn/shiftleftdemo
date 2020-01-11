@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Price</title>
+
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+    <script>
+     $(document).ready(function() {
+
+            $("#ok").click(function(event){
+                 units = $('#units').val()
+                 fruit = $('#fruit').val()
+                 $.ajax({
+                    url: "/priceinfoNOK/"+units+"/"+fruit
+                }).then(function(data) {
+                    $('#price').text(data.price.toFixed(2));
+                    $('#currency').text(data.currency);
+                });
+            });
+        });
+
+</script>
+</head>
+<body>
+
+<h3>Fruit web shop (with hyper modern professional look and feel)</h3>
+
+Select fruit
+<select id="fruit">
+<option>apple</option>
+<option>banana</option>
+</select>
+<br>
+How many do you want?
+<select id="units">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+    <option>6</option>
+    <option>7</option>
+</select>
+&nbsp;<button id="ok">Calculate price</button>
+<p>price: <span id="price"></span> <span id="currency"></span> </p>
+
+<img src="fruit.png">
+</body>
+</html>

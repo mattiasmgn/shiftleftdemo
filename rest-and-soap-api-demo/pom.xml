@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>se.freefarm.fruit</groupId>
+  <artifactId>rest-and-soap-api-demo</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>rest-and-soap-api-demo</name>
+  <url>http://www.freefarm.se</url>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.9.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <cxf.version>3.2.7</cxf.version>
+    <build-helper-plugin.version>3.0.0</build-helper-plugin.version>
+    <cucumber.version>4.3.1</cucumber.version>
+    <failsafe.version>3.0.0-M3</failsafe.version>
+    <test.integration.skip>false</test.integration.skip>
+    <!-- Properties related to Wiremock rec/play -->
+    <wiremock-maven-plugin.version>2.7.0</wiremock-maven-plugin.version>
+    <wiremock.mockfilesdir>play</wiremock.mockfilesdir>
+    <wiremock.recmode/>
+    <wiremock.start.phase>pre-integration-test</wiremock.start.phase>
+    <spring.application.profile>integration-test</spring.application.profile>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.konghq</groupId>
+      <artifactId>unirest-java</artifactId>
+      <version>3.3.00</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web-services</artifactId>
+    </dependency>
+
+
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java8</artifactId>
+      <version>${cucumber.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-spring</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.masterthought</groupId>
+      <artifactId>cucumber-reporting</artifactId>
+      <version>3.16.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.skyscreamer/jsonassert -->
+    <dependency>
+      <groupId>org.skyscreamer</groupId>
+      <artifactId>jsonassert</artifactId>
+      <version>1.5.0</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-codegen-plugin</artifactId>
+        <version>${cxf.version}</version>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>generate-sources</phase>
+            <configuration>
+              <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
+              <wsdlOptions>
+                <wsdlOption><wsdl>${basedir}/src/main/resources/wsdl/fruit.wsdl</wsdl></wsdlOption>
+              </wsdlOptions>
+            </configuration>
+            <goals>
+              <goal>wsdl2java</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>${build-helper-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>add-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${project.build.directory}/generated-sources/cxf</source>
+              </sources>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>add-test-source</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/it/java</source>
+              </sources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add-test-resource</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>add-test-resource</goal>
+            </goals>
+            <configuration>
+              <resources>
+                <resource>
+                  <directory>src/it/resources</directory>
+                  <targetPath>resources</targetPath>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <!-- Makes the jar-file executable -->
+          <execution>
+
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+          <!-- Start and stop the Spring-boot app during integration-test,
+               with the specified applications properties. -->
+          <execution>
+            <id>pre-integration-test</id>
+            <configuration>
+              <jvmArguments>-Dspring.profiles.active=${spring.application.profile}</jvmArguments>
+              <skip>${test.integration.skip}</skip>
+            </configuration>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>post-integration-test</id>
+            <configuration>
+              <skip>${test.integration.skip}</skip>
+            </configuration>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <!-- Start (or don't start) wiremock pre integration test with settings needed for play or rec -->
+        <groupId>uk.co.deliverymind</groupId>
+        <artifactId>wiremock-maven-plugin</artifactId>
+        <version>${wiremock-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>${wiremock.start.phase}</phase>
+            <id>wiremock</id>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <dir>target/test-classes/resources/${wiremock.mockfilesdir}</dir>
+              <params>--port=8119 --verbose</params>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <!-- Will execute the CucumberIT classes, up to 10 in parallel  -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>${failsafe.version}</version>
+        <configuration>
+          <forkCount>10</forkCount>
+          <reuseForks>true</reuseForks>
+          <includes>
+            <include>**/*IT.class</include>
+          </includes>
+        </configuration>
+      </plugin>
+
+      <!-- Create a Cucumber report from commandline by executing:  -->
+      <!-- mvn exec:java@report -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <executions>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>se.freefarm.fruit.rest.Report</mainClass>
+          <classpathScope>test</classpathScope>
+        </configuration>
+      </plugin>
+
+
+      <plugin>
+        <!-- mvn pact:verify -->
+        <groupId>au.com.dius</groupId>
+        <artifactId>pact-jvm-provider-maven_2.11</artifactId>
+        <version>3.5.10</version>
+        <configuration>
+          <serviceProviders>
+            <!-- You can define as many as you need, but each must have a unique name -->
+            <serviceProvider>
+              <name>FruitRestService</name>
+              <!-- All the provider properties are optional, and have sensible defaults (shown below) -->
+              <protocol>http</protocol>
+              <host>localhost</host>
+              <port>8118</port>
+              <path>/</path>
+              <pactFileDirectory>../pacts</pactFileDirectory>
+            </serviceProvider>
+          </serviceProviders>
+          <pactBrokerUrl/>
+        </configuration>
+      </plugin>
+
+
+    </plugins>
+  </build>
+
+
+</project>

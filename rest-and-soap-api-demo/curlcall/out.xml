@@ -1,0 +1,1 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns3:PriceDetailsResponse xmlns:ns3="http://www.freefarm.se/fruit/"><PriceInformation><Fruit>banana</Fruit><Currency>NOK</Currency><Price>28.048382196738196</Price><Units>2</Units></PriceInformation></ns3:PriceDetailsResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>

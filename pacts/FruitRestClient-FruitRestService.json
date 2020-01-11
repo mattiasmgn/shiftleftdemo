@@ -1,0 +1,51 @@
+{
+    "provider": {
+        "name": "FruitRestService"
+    },
+    "consumer": {
+        "name": "FruitRestClient"
+    },
+    "interactions": [
+        {
+            "description": "A request for 2 apples",
+            "request": {
+                "method": "GET",
+                "path": "/priceinfoNOK/2/apple"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": {
+                    "price": 1.234
+                },
+                "matchingRules": {
+                    "body": {
+                        "$.price": {
+                            "matchers": [
+                                {
+                                    "match": "decimal"
+                                }
+                            ],
+                            "combine": "AND"
+                        }
+                    }
+                }
+            },
+            "providerStates": [
+                {
+                    "name": "There is a fruit named apple in the store"
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "pact-specification": {
+            "version": "3.0.0"
+        },
+        "pact-jvm": {
+            "version": "3.5.10"
+        }
+    }
+}

@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fru="http://www.freefarm.se/fruit/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <fru:PriceDetailsRequest>
+         <fruit>banana</fruit>
+         <units>2</units>
+      </fru:PriceDetailsRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
