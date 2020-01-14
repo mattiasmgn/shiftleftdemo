@@ -32,7 +32,7 @@ public class PriceInfoController2 {
         double priceNOK = price / rate;
         priceNOK = priceNOK - (priceNOK * getDiscount(numberOfFruit));
         PriceInformationDTO p = new PriceInformationDTO(fruit,numberOfFruit,priceNOK,"NOK");
-        p.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+        //p.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
         return p;
     }
 

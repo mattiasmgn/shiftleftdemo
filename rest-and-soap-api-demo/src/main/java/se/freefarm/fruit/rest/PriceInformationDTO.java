@@ -6,11 +6,11 @@ public class PriceInformationDTO {
     Double price;
     String currency;
 
-
+/*
     String date;
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
-
+*/
 
     public PriceInformationDTO() {
     }
