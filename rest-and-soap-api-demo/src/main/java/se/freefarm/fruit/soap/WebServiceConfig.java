@@ -28,8 +28,8 @@ public class WebServiceConfig  extends WsConfigurerAdapter {
         System.out.println("Returning wsdl");
         SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
         wsdl11Definition.setWsdl(new ClassPathResource("/wsdl/fruit.wsdl"));
-        // priceinfo.wsdl är samma som (name="priceinfo")
-        // http://localhost:8118/priceinfosoap/ws/priceinfo.wsdl
+        // fruit.wsdl in the URL below is actually from @Bean(name="fruit"), not the file fruit.wsdl in the path /wsdl/fruit.wsdl
+        // http://localhost:8118/priceinfosoap/ws/fruit.wsdl
         return wsdl11Definition;
     }
 
